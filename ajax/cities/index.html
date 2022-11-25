@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cities</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap.min.css" />
+    <script src="../../bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../../jquery/jquery-3.6.1.min.js"></script>
+  </head>
+  <body>
+    
+    <div class="container shadow rounded p-3 mt-5 border">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Country</label>
+          <select id="js_country" class="form-select">
+            <option value="1">Lebanon</option>
+            <option value="2">Saudi Arabia</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-6 position-relative">
+          <label class="form-label">City</label>
+          <select id="js_city" class="form-select"></select>
+          <div id="js_city_spinner" class="spinner-border position-absolute top-50 start-0 ms-3 d-none"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(function () {
+        $("#js_country").change(function () {
+          $("#js_city_spinner").removeClass("d-none");
+          $.ajax({
+            type: "post",
+            url: "api.php",
+            data: {
+              country_id: $(this).val(),
+            },
+
+            success: function (response) {
+              $("#js_city_spinner").addClass("d-none");
+              response = JSON.parse(response);
+              // console.log(response);
+              var city_options = ``;
+              for (var city of response) {
+                console.log(city);
+                city_options += `<option value='${city.id}'>${city.name}</option>`;
+              }
+              $("#js_city").html(city_options);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

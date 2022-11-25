@@ -1,0 +1,30 @@
+body{
+    padding: 0;
+    margin: 0;
+    height: 200vh;
+}
+.fixed{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+}
+
+.relative{
+    position: relative;
+    /* border: 2px solid rebeccapurple; */
+    width: 300px;
+    height: 300px;
+    margin: 5rem;
+    background-color: red;
+}
+.absolute{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: blue;
+    width: 100px;
+    height: 100px;
+}

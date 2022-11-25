@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap.min.css" />
+    <script src="../../jquery/jquery-3.6.1.min.js"></script>
+    <script src="dist/jquery.validate.min.js"></script>
+    <script src="../../bootstrap//bootstrap.bundle.min.js"></script>
+    <script src="../validator.min.js"></script>
+    <style>
+      input.error{
+        border: 1px solid red;
+      }
+      label.error{
+        color: red;
+        font-weight: bold;
+      }
+      .form-group{
+        margin-block: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="js_form" action="">
+      <div class="container">
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" name="email" id="email" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control"
+          />
+        </div>
+        <button class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+
+    <script>
+      $(function () {
+        $.validator.addMethod(
+          "cm_required",
+          function (value, element) {
+            return value.trim() != "";
+          },
+          "Required"
+        );
+        $.validator.addMethod(
+          "cm_email",
+          function (value, element) {
+            return validator.isEmail(value);
+          },
+          "Must Contains @ and ."
+        );
+
+        $.validator.addMethod(
+          "cm_password",
+          function (value, element) {
+            return validator.isStrongPassword(value, {
+              minLength: 8,
+              minLowercase: 1,
+              minUppercase: 1,
+              minNumbers: 1,
+              minSymbols: 0,
+              returnScore: false,
+              pointsPerUnique: 1,
+              pointsPerRepeat: 0.5,
+              pointsForContainingLower: 10,
+              pointsForContainingUpper: 10,
+              pointsForContainingNumber: 10,
+              pointsForContainingSymbol: 10,
+            });
+          },
+          "Must bet at leat 8 charachters with 1 Capital, Lower letter and number"
+        );
+
+        $("#js_form").validate({
+          rules: {
+            username: "cm_required",
+            email: {
+              cm_required: true,
+              cm_email: true,
+            },
+            password: "cm_password",
+          },
+
+          submitHandler: function (form) {
+            alert("success");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

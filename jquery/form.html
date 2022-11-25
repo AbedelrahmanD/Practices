@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+
+  <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+  <script src="../jquery/jquery-3.6.1.min.js"></script>
+  <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+
+  <style>
+    .form-group {
+      margin-block: 1rem;
+    }
+
+    .error_control {
+      border: 1px solid red;
+    }
+
+    .error_message {
+      color: red;
+    }
+    .hide{
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="">
+    <div class="container w-50">
+      <div class="alert alert-success my-2 hide" id="js_alert">
+        <strong>Valid Form</strong>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" id="js_name" class="form-control" data-error_message="Name Required" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="js_email" class="form-control" data-error_message="Email Required" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="Password" id="js_password" class="form-control"
+          data-error_message="Password Must Be 8 Charchters" />
+      </div>
+      <button id="js_submit" class="btn btn-primary w-100">Submit</button>
+    </div>
+  </form>
+
+  <script>
+    $(function () {
+      var is_valid_form=false;
+      var name = $("#js_name");
+      var email = $("#js_email");
+      var password = $("#js_password");
+      function set_error_control(element) {
+        is_valid_form=false;
+        element
+          .addClass("error_control")
+          .after(
+            `<span class='error_message'>${element.attr(
+              "data-error_message"
+            )}</span>`
+          );
+      }
+
+      function clear_error_controls() {
+        is_valid_form=true;
+        $(".error_control").removeClass("error_control");
+        $(".error_message").remove();
+
+      }
+
+      $("#js_submit").click(function (e) {
+        e.preventDefault();
+        clear_error_controls();
+        if (name.val().trim() == "") {
+          set_error_control(name);
+        }
+        if (email.val().trim() == "") {
+          set_error_control(email);
+        }
+        if (password.val().trim().length < 8) {
+          set_error_control(password);
+        }
+        if(is_valid_form){
+          $("#js_alert").fadeIn();
+        }else{
+          $("#js_alert").hide();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

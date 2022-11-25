@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      .completed {
+        color: green;
+      }
+    </style>
+    <script src="../../jquery/jquery-3.6.1.min.js"></script>
+  </head>
+  <body>
+    <!-- <button>Refresh</button> -->
+    <div id="js_list">Loading...</div>
+    <script>
+      $(function () {
+        $.ajax({
+          type: "get",
+          url: "https://jsonplaceholder.typicode.com/todos",
+          success: function (response) {
+            console.log(response[0]);
+            var list_html = ``;
+            var css_class = "";
+            $.each(response, function (index, item) {
+              css_class = item.completed ? "completed" : "";
+              list_html += `<h1 class='${css_class} js_item' >${item.title}</h1>`;
+            });
+            $("#js_list").html(list_html);
+          },
+        });
+
+        $(document).on("click", ".js_item", function () {
+          $(this).toggleClass("completed");
+        });
+
+        // $(".js_item").click(function (e) {
+        //     $(this).toggleClass("completed");
+        // });
+      });
+    </script>
+  </body>
+</html>

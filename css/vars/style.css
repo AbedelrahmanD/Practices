@@ -1,0 +1,23 @@
+:root{
+    --primary_color:rgb(81, 255, 0);
+    --width:100px;
+    --height:100px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+.box{
+    background-color: var(--primary_color);
+    width: var(--width);
+    height: var(--height);
+}
+button{
+    background-color: var(--primary_color);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

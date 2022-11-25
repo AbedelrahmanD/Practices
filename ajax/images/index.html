@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Images API</title>
+    <link rel="stylesheet" href="../../fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="../../fontawesome/solid.min.css">
+    <link rel="stylesheet" href="../../bootstrap/bootstrap.min.css" />
+    <script src="../../jquery/jquery-3.6.1.min.js"></script>
+    <script src="../../bootstrap/bootstrap.bundle.min.js"></script>
+    <style>
+      .modal_image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .card img {
+        height: 300px;
+        object-fit: cover;
+      }
+      .scroll_top {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100%;
+        background-color: white;
+        box-shadow: 1px 1px 5px grey;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card{
+        transition: all 0.3s;
+      }
+      .card:hover{
+        transform: translateY(-10px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid p-0  overflow-hidden position-relative rounded-bottom" style="height: 300px;">
+        <img src="../../images//one.jpg" class="w-100">
+      <form action="" class="position-absolute top-50 left-0 right-0 d-flex flex-column justify-content-center align-items-center w-100">
+        <h1 class="text-white">
+            Welcome
+        </h1>
+        <div class="d-flex justify-content-center w-100">
+          <input
+            type="text"
+            id="js_search" 
+            placeholder="Search..."
+            class="form-control"
+            style="max-width:300px"
+           
+          />
+          <button id="js_search_btn" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="container shadow rounded border p-2 my-5">
+      <div id="js_images_list" class="row"></div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body d-flex justify-content-center">
+            <img id="js_modal_image" class="modal_image" src="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="js_scroll_top" class="scroll_top">
+        <i class="fa-regular fa-arrow-up"></i>
+    </div>
+
+    <script>
+      var url = `https://pixabay.com/api/?key=18178390-4af99ad03ae9e0e7b2f2ada16&safesearch=true&image_type=photo&pretty=true&per_page=200&q=`;
+
+      function fetch_images(searched_value = "") {
+        var js_image_list = $("#js_images_list");
+        js_image_list.html(
+          `<div class='d-flex justify-content-center'><div class='spinner-border'></div></div>`
+        );
+
+        $.ajax({
+          url: url + searched_value,
+          success: function (response) {
+            response = response.hits;
+            var images_list = ``;
+            $.each(response, function (i, image) {
+              images_list += `
+              <div class="col-12 col-md-6 col-lg-4 my-3">
+                <div class="card ">
+            <img 
+            data-bs-toggle="modal" data-bs-target="#exampleModal"
+            role="button" src="${image.webformatURL}" loading="lazy"  class="js_card_image card-img-top" alt="${image.webformatURL}">
+            <div class="card-body">
+              <h5 class="card-title">${image.user}</h5>
+              <p class="card-text">${image.tags}</p>
+              <a href="${image.webformatURL}" download target="_blank" class="btn btn-primary rounded-pill">Download</a>
+            </div>
+          </div>
+                </div>
+               `;
+            });
+
+            js_image_list.html(images_list);
+          },
+        });
+      }
+
+      $(function () {
+        fetch_images();
+        $(document).on("click", ".js_card_image", function () {
+          var src = $(this).attr("src");
+          $("#js_modal_image").attr("src", src);
+        });
+
+        $("#js_scroll_top").click(function () {
+          $(window).scrollTop(0);
+        });
+
+        $("#js_search_btn").click(function (e) {
+          e.preventDefault();
+          var searched_value = $("#js_search").val();
+          fetch_images(searched_value);
+        });
+      });
+    </script>
+  </body>
+</html>

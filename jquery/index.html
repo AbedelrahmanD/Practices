@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../jquery-3.6.1.min.js"></script>
+    <style>
+      .hide {
+        display: none;
+      }
+      .sans {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title" class="title">HTML Titile</h1>
+    <!-- <h1 class="title">title2</h1>
+    <h1 class="title">title3</h1> -->
+
+    <script>
+      //auto check if elements exists
+        var title = document.querySelector("#title").textContent;
+        console.log(title);
+        title = $("#title").text();
+        console.log(title);
+
+      //chaining
+    //   var title = document.querySelector("#title");
+    //   title.style.color = "blue";
+    //   title.style.backgroundColor = "grey";
+    //   title.style.fontSize = "3rem";
+    //   title.textContent = "JS Title";
+    //   title.classList.add("sans");
+
+        // $("#title").css({
+        //   "color": "red",
+        //   "background-color":"grey",
+        //   "font-size": "3rem",
+        // })
+        // .text("Jquery Title")
+        // .addClass("sans");
+
+
+        //events
+        // document.querySelectorAll(".title").forEach(function(el){
+        //     el.addEventListener("click",function(){
+        //         alert(event.currentTarget.textContent);
+        //     });
+        // });
+
+        // $(".title").click(function(){
+        //     alert($(this).text());
+        // });
+
+
+    </script>
+  </body>
+</html>

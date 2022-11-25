@@ -1,0 +1,57 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid blue;
+  border-top-color: transparent;
+  animation: 0.5s spinner_animation linear infinite;
+}
+
+@keyframes spinner_animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+.spinner_grow {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background-color: rgb(43, 255, 0);
+  animation: 0.5s spinner_grow_animation linear infinite alternate;
+}
+
+@keyframes spinner_grow_animation {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.spinner_slide {
+  width: 200px;
+  height: 5px;
+  background-color: red;
+  border-radius: 20px;
+  animation: 0.5s spinner_slide_animation linear infinite;
+}
+
+@keyframes spinner_slide_animation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(500px);
+    opacity: 0;
+  }
+}
